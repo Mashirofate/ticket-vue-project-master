@@ -74,7 +74,6 @@
         <el-table-column prop="tQrcard" label="二维码信息" />
         <el-table-column prop="tIdentitycard" label="身份证信息" />
         <el-table-column prop="similar" label="相似度" />
-        <el-table-column prop="temp" label="温度/℃ " />
         <el-table-column prop="eDate" label="创建时间" />
 
       </el-table>
