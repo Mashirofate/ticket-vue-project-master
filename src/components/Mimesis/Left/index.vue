@@ -9,13 +9,22 @@
         </div>
 
       </div>
+      <div class="flip-numbers-number">
+        <div class="flip-number-tits">工作证入场人数</div>
+        <div class="flip-numbers-numbers" style="align-self: center;">
+            <div v-for="(item,index) of this.workString" :key="index">
+            <div class="flip-single-numbers"> {{ item }}</div>
+          </div>
+        </div>
+      </div>
+
 
       <div class="flip-number-number-picture">
         <div class="flip-number-tit">场内入场人数预警</div>
         <div id="echartsBar" style="width: 448px;height: 70px" class="flip-number-number-picture-bar" />
       </div>
       <div class="flip-number-number-device">
-        <div class="flip-number-tit">设备在线情况</div>
+        <div class="flip-number-tit">人员区域分布情况</div>
         <div class="rightItem1">
           <dev :a-id="this.aId" />
         </div>
@@ -45,7 +54,9 @@ export default {
       intraField: 0,
       anumber: 0,
       intraFieldString: '0000000',
-      numList: []
+      numList: [],
+      work:0,
+      workString: '00000',
     }
   },
 
@@ -68,6 +79,19 @@ export default {
       alist = alist.toFixed(0)
       const Listsum = [alist]
       this.echartsBarInit(Listsum)
+    },
+    work: function(value, oldValue) {
+      let excessive = this.work.toString()
+      if (excessive.length < 5) {
+        let index = excessive.length
+        for (index; index < 5; index++) {
+          excessive = '0' + excessive
+        }
+      }
+
+      this.workString = excessive
+
+
     }
 
   },
@@ -84,7 +108,7 @@ export default {
       this.chart.setOption(// 通过setOption来生成柱状图
         {
           grid: { // 直角坐标系内绘图网格
-            left: '10', // grid 组件离容器左侧的距离,
+            left: '0', // grid 组件离容器左侧的距离,
             // left的值可以是80这样具体像素值，
             // 也可以是'80%'这样相对于容器高度的百分比
             top: '20',
@@ -125,7 +149,7 @@ export default {
               label: { // 图形上的文本标签
                 show: true,
                 position: 'right', // 标签的位置
-                offset: [-30, -20], // 标签文字的偏移，此处表示向上偏移40
+                offset: [0, -20], // 标签文字的偏移，此处表示向上偏移40
                 formatter: '{c}{a}', // 标签内容格式器 {a}-系列名,{b}-数据名,{c}-数据值
                 color: 'rgb(255, 255, 255)', // 标签字体颜色
                 fontSize: 24, // 标签字号
@@ -176,8 +200,8 @@ export default {
       )
     },
     initWebSocket(value) {
-      //  const wsuri = 'ws://175.24.189.222:8080/RealTimePeopleServer/' + value.aId
-      const wsuri = 'ws://localhost:8080/RealTimeOtherServer/' + value.aId
+       const wsuri = 'ws://172.127.1.200:8080/RealTimeOtherServer/' + value.aId
+      // const wsuri = 'ws://localhost:8080/RealTimeOtherServer/' + value.aId
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -190,18 +214,18 @@ export default {
       this.aId = value.aId
     },
     websocketonopen() {
-      this.$notify({
-        title: '成功',
-        message: '实时设备状态连接成功',
-        type: 'success'
-      })
+      // this.$notify({
+      //   title: '成功',
+      //   message: '实时设备状态连接成功',
+      //   type: 'success'
+      // })
     },
     websocketonerror() {
-      this.$notify({
-        title: '警告',
-        message: '实时设备状态连接失败',
-        type: 'warning'
-      })
+      // this.$notify({
+      //   title: '警告',
+      //   message: '实时设备状态连接失败',
+      //   type: 'warning'
+      // })
       this.initWebSocket()
     },
     websocketonmessage(e) {
@@ -211,15 +235,16 @@ export default {
       // }
       const redata = JSON.parse(e.data)
       this.intraField = redata.intraField
+      this.work = redata.work
     },
     websocketclose(e) {
-      this.$notify({
-        title: '警告',
-        message: 'centre连接已关闭',
-        type: 'warning'
-      })
-      // 关闭
-      console.log('断开连接', e)
+      // this.$notify({
+      //   title: '警告',
+      //   message: 'centre连接已关闭',
+      //   type: 'warning'
+      // })
+      // // 关闭
+      // console.log('断开连接', e)
     }
 
   }
@@ -238,13 +263,35 @@ export default {
   display:flex;
   flex-direction: row;
 }
+
+.flip-numbers-numbers{
+  display:flex;
+  flex-direction: row;
+  margin-left: 90px;
+
+}
+
+.flip-numbers-number{
+  display:flex;
+  flex-direction: row;
+  margin-top: 30px;
+
+}
 .flip-number-tit{
   font-family: "Microsoft Yahei", Arial, sans-serif;
   font-size: 22px;
   color: rgb(154, 168, 212);
   font-weight: normal;
   margin-left: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+}
+.flip-number-tits{
+  font-family: "Microsoft Yahei", Arial, sans-serif;
+  font-size: 22px;
+  color: rgb(154, 168, 212);
+  font-weight: normal;
+  margin-left: 20px;
+  margin-top: 20px;
 }
 .flip-number-number-picture{
   margin-top: 50px;
@@ -261,6 +308,20 @@ font-family: "Microsoft Yahei", Arial, sans-serif;
 .flip-single-number{
   font-family: Microsoft Yahei, Arial, sans-serif;
   font-size: 62px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+  margin-left: 3.1px;
+  margin-right: 3.1px;
+  padding: 0px 0.1em;
+  box-sizing: content-box;
+  width: 0.6em;
+  text-align: center;
+  background-color: rgb(15, 57, 107);
+}
+
+.flip-single-numbers{
+  font-family: Microsoft Yahei, Arial, sans-serif;
+  font-size: 36px;
   font-weight: bold;
   color: rgb(255, 255, 255);
   margin-left: 3.1px;

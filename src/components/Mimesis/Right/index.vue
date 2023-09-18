@@ -103,7 +103,7 @@ export default {
   watch: {
     activity: {
       handler: function(val, oldVal) {
-        this.initWebSocket(val.aId)
+        this.initWebSocket(val)
       },
       deep: true
     }
@@ -112,9 +112,9 @@ export default {
     this.websock.close()
   },
   methods: {
-    initWebSocket(vaId) {
-      // const wsuri = 'ws://175.24.189.222:8080/RealTimeEnterServer/' + vaId
-      const wsuri = 'ws://localhost:8080/RealTimeEnterServer/' + vaId
+    initWebSocket(value) {
+       const wsuri = 'ws://172.127.1.200:8080/RealTimeEnterServer/' + value.aId
+      //const wsuri = 'ws://localhost:8080/RealTimeEnterServer/' + value.aId
       // console.log(wsuri);
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -123,11 +123,11 @@ export default {
       // 连接建立之后执行send方法发送数据
       // let actions = { test: "12345" };
       // this.websocketsend(JSON.stringify(actions));
-      this.$notify({
-        title: '成功',
-        message: '各个入口实时人数连接成功',
-        type: 'success'
-      })
+      // this.$notify({
+      //   title: '成功',
+      //   message: '各个入口实时人数连接成功',
+      //   type: 'success'
+      // })
     },
     websocketonerror() {
       // 连接建立失败重连
@@ -145,13 +145,13 @@ export default {
       this.intraFieldsum = this.intraField + this.typeOutCount
     },
     websocketclose(e) {
-      this.$notify({
-        title: '警告',
-        message: '各个入口实时人数已关闭',
-        type: 'warning'
-      })
-      // 关闭
-      console.log('断开连接', e)
+      // this.$notify({
+      //   title: '警告',
+      //   message: '各个入口实时人数已关闭',
+      //   type: 'warning'
+      // })
+      // // 关闭
+      // console.log('断开连接', e)
     }
   }
 }

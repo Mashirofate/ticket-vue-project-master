@@ -16,7 +16,7 @@
         <el-form-item label="上传照片">
 
           <el-upload
-            action="http://192.168.1.200:8080/fr/search"
+            action="http://192.168.31.68:8080/fr/search"
             list-type="picture-card"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
@@ -41,7 +41,11 @@
 
         <el-form-item>
           <el-button type="primary" size="mini" icon="el-icon-search" @click="onSubmit">查询</el-button>
+          
         </el-form-item>
+
+        <el-button  @click="onPosts">江门</el-button>
+        <el-button  @click="onPosthuizou">惠州</el-button>
       </el-form>
 
     </el-card>
@@ -91,7 +95,7 @@
 </template>
 
 <script>
-import { getByKeys } from '@/api/fr'
+import { getByKeys ,getposts,gethuizou} from '@/api/fr'
 export default {
   data() {
     return {
@@ -229,10 +233,39 @@ export default {
         this.tabelLoading = false
       })
     },
-
-    handleSelectionChange(e) {
-      this.selectData = e
+    onPosts() {
+      this.tabelLoading = true
+    
+      this.record = []
+      getposts(1).then(response => {
+        var list = response.data.items
+        if (list != null) {
+          this.record = records
+         
+        } else {
+        
+          this.worthys(1, 10, null, 0)
+        }
+        this.tabelLoading = false
+      })
     },
+    onPosthuizou() {
+      this.tabelLoading = true
+    
+      this.record = []
+      gethuizou(1).then(response => {
+        var list = response.data.items
+        if (list != null) {
+          this.record = records
+         
+        } else {
+        
+          this.worthys(1, 10, null, 0)
+        }
+        this.tabelLoading = false
+      })
+    },
+  
     getBase64(file) {
       return new Promise(function(resolve, reject) {
         const reader = new FileReader()

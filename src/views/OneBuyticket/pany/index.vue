@@ -7,7 +7,7 @@
       <!-- <el-button type="text"  @click='add(i)'> 活动：{{item.aName }}</el-button> -->
       <el-button type="text"  @click='handleClick(item.aId)'> 活动：{{item.aName }}</el-button>
 
-      
+      <company  :aIdValue='item.aId' ref="company" @children="parentCompany"></company>
 
     </el-card>
   </div>
@@ -22,10 +22,12 @@
 <script>
 import { getByKeys,  desccId, } from '@/api/bt';
 
+import company from "./company.vue";
 
 export default {
 
   components:{
+    company,
   },
 
   data() {
@@ -68,15 +70,15 @@ export default {
       this.init()
     },
 
-    // // 弹出对话框
-    // add(i) {
-    //   this.$refs.company[i].showDialog()
-    // },
-    //   // 子组件传值给父组件-公司
-    // parentCompany(obj) {
-    //   // 打印子组件传递的值
-    //   console.log("parentCompany",obj)
-    // },
+    // 弹出对话框
+    add(i) {
+      this.$refs.company[i].showDialog()
+    },
+      // 子组件传值给父组件-公司
+    parentCompany(obj) {
+      // 打印子组件传递的值
+      console.log("parentCompany",obj)
+    },
 
     handleClick(i){
       this.$router.push({ 

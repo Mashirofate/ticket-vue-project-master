@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div  class="app-container">
     <el-card class="box-card" shadow="never">
       <!-- <div slot="header" class="clearfix">
         <span></span>

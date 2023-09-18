@@ -3,11 +3,22 @@
     <div class="flip-number-tit-centre-sup"> 进出口人流量实时走势</div>
     <div id="centreChart" class="centreChart-bar" />
     <div class="centreBelowChart-bar">
-      <div class="flip-number-tit-centre-sup"> 进出口人流量占比</div>
-      <div class="centreBelowChart-bar-pohio">
-        <div id="enter-chars" class="centreBelowChart-bar-enter" />
-        <div id="out-chars" class="centreBelowChart-bar-out" />
-      </div>
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane class="flip-number-tad" label="进出口人流量占比" name="first">
+          <div class="centreBelowChart-bar-pohio">
+            <div id="enter-chars" class="centreBelowChart-bar-enter" />
+            <div id="out-chars" class="centreBelowChart-bar-out" />
+          </div>
+        </el-tab-pane>
+
+        <el-tab-pane label="区域座位人数" name="second">
+         <div class="centreBelowChart-bar-pohios">
+          <div id="sec-chars" class="sec-chars-enter" />
+        </div>
+        </el-tab-pane>
+      
+      </el-tabs>
+      
     </div>
   </div>
 
@@ -28,7 +39,11 @@ export default {
       outlist: [],
       timelist: [],
       eachexenterList: [],
-      eachexoutList: []
+      eachexoutList: [],
+      activeName: 'first',
+      SeatList:[],
+      GrandList:[],
+      GrandsList:[]
     }
   },
   watch: {
@@ -39,6 +54,7 @@ export default {
       this.drawChart()
       this.enterChars()
       this.outChars()
+      this.secChars()
     }
 
   },
@@ -51,9 +67,18 @@ export default {
 
   methods: {
 
+
+    formats(prventage){
+          return  prventage + "一楼看台"
+    },
+
+    handleClick(tab, event) {
+        console.log(tab, event);
+    },
+
     initWebSocket(value) {
-     // const wsuri = 'ws://175.24.189.222:8080/RealTimePeopleServer/' + value.aId
-       const wsuri = 'ws://localhost:8080/RealTimeEntranceServer/' + value.aId
+      const wsuri = 'ws://172.127.1.200:8080/RealTimeEntranceServer/' + value.aId
+      //  const wsuri = 'ws://localhost:8080/RealTimeEntranceServer/' + value.aId
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -62,18 +87,18 @@ export default {
       this.websock.onclose = this.websocketclose
     },
     websocketonopen() {
-      this.$notify({
-        title: '成功',
-        message: '实时设备状态连接成功',
-        type: 'success'
-      })
+      // this.$notify({
+      //   title: '成功',
+      //   message: '实时设备状态连接成功',
+      //   type: 'success'
+      // })
     },
     websocketonerror() {
-      this.$notify({
-        title: '警告',
-        message: '实时设备状态连接失败',
-        type: 'warning'
-      })
+      // this.$notify({
+      //   title: '警告',
+      //   message: '实时设备状态连接失败',
+      //   type: 'warning'
+      // })
       this.initWebSocket()
     },
     websocketonmessage(e) {
@@ -87,15 +112,19 @@ export default {
       this.timelist = redata.timelist
       this.eachexenterList = redata.EachexenterList
       this.eachexoutList = redata.EachexoutList
+      this.SeatList =redata.SeatList
+      this.GrandList =redata.GrandList
+      this.GrandsList =redata.GrandsList
+
     },
     websocketclose(e) {
-      this.$notify({
-        title: '警告',
-        message: 'centre连接已关闭',
-        type: 'warning'
-      })
-      // 关闭
-      console.log('断开连接', e)
+      // this.$notify({
+      //   title: '警告',
+      //   message: 'centre连接已关闭',
+      //   type: 'warning'
+      // })
+      // // 关闭
+      // console.log('断开连接', e)
     },
 
     drawChart() {
@@ -170,6 +199,11 @@ export default {
             type: 'bar',
             data: this.enterlist,
             symbol: 'none',
+            label: {
+                    show: true, //开启显示
+                    position: 'top', //在上方显示
+                    formatter: '{c}人',//显示百分号
+                  },
             animationDelay: function(idx) {
               return idx * 10 + 100
             },
@@ -181,6 +215,11 @@ export default {
             type: 'bar',
             data: this.outlist,
             symbol: 'none',
+            label: {
+                    show: true, //开启显示
+                    position: 'top', //在上方显示
+                    formatter: '{c}人',//显示百分号
+                  },
             animationDelay: function(idx) {
               return idx * 10 + 100
             },
@@ -224,7 +263,7 @@ export default {
             avoidLabelOverlap: true,
             label: {
               normal: {
-                formatter: '{b}: {d}%',
+                formatter: '{b}: {c}人',
                 textStyle: {
                   fontWeight: 'normal',
                   fontSize: 12
@@ -268,7 +307,8 @@ export default {
             avoidLabelOverlap: true,
             label: {
               normal: {
-                formatter: '{b}: {d}%',
+                // formatter: '{b}: {d}%',
+                formatter: '{b}: {c}人',
                 textStyle: {
                   fontWeight: 'normal',
                   fontSize: 12
@@ -282,7 +322,75 @@ export default {
           }
         ]
       })
+    },
+
+    secChars() {
+      const echarts = require('echarts')
+
+      const myChart = echarts.init(document.getElementById('sec-chars'))
+
+      myChart.setOption({
+      
+
+      series: [
+        {
+          type: 'treemap',
+          data: this.GrandList,
+          breadcrumb:{  //底层显示层级关系的面包屑,默认开启
+            show:false
+          },
+        },
+        
+      ],
+      tooltip: {
+   formatter: function (GrandList) {
+          var str = '';
+          return str.concat(GrandList.name  + '：', GrandList.value+ '人');
+      }
+    },
+    label: {
+      formatter: function (a) {
+          var str = '';
+          return str.concat(a.name  + '：', a.value+ '人');
+      }
+   },
+   color:['#00BBF9 ','#3185FC','#5DADE2',"#23C5BC ",'#0FFF0',"#2471A3"]
+    })
+    },
+    
+    colors(){
+      var color = ''
+        var mun = (entrance / sum) * 10000
+
+        // console.log('id:' + id + ' entrance' + entrance + ' sum' + sum + ' mun' + mun)
+        if (mun < 50) {
+          color = '#0AE2A4'
+          this.colors(id, color)
+        } else if (mun < 70) {
+          color = '#0DB0FF'
+          this.colors(id, color)
+        } else if (mun < 90) {
+          color = '#1AE9F0'
+          this.colors(id, color)
+        } else if (mun < 100) {
+          color = '#FFA340'
+          this.colors(id, color)
+        } else if (mun >= 100) {
+          color = '#FF1801'
+          this.colors(id, color)
+        }
+      },
+
+      colorss(id, new_color) {
+      var obj = document.getElementById(id)
+
+      obj.setAttribute('style', 'fill:' + new_color)
     }
+    },
+
+    
+
+    
     // outChars() {
     //   const echarts = require('echarts')
 
@@ -345,7 +453,7 @@ export default {
     //     ]
     //   })
     // }
-  }
+  
 }
 
 </script>
@@ -384,10 +492,66 @@ export default {
   height: 400px;
   width: 440px;
 }
+.centreBelowChart-bar-pohios{
+  width: 880px;
+  height: 400px;
+  display:flex;
+  flex-direction:row;
+}
+
+.sec-chars-enter{
+  z-Index:15;
+  width: 880px;
+  height: 400px;
+}
+
+
+
+.sec-chars-top{
+  font-family: "Microsoft Yahei", Arial, sans-serif;
+  font-size: 12px;
+  color: rgb(154, 168, 212);
+  font-weight: normal;
+  text-align: center;
+  z-Index:15;
+  width: 240px;
+  height: 400px;
+}
+
 .flip-number-tit-centre-sup{
   font-family: "Microsoft Yahei", Arial, sans-serif;
   font-size: 22px;
   color: rgb(154, 168, 212);
   font-weight: normal;
 }
+.flip-number-tad{
+  font-family: "Microsoft Yahei", Arial, sans-serif;
+  font-size: 22px;
+  color: rgb(154, 168, 212);
+  font-weight: normal;
+}
+
+.el-tabs__item{
+  font-family: "Microsoft Yahei", Arial, sans-serif;
+  font-size: 22px;
+  
+}
+.grid-contents{
+  margin-block-end:0rem;
+  margin-block-start:0rem;
+}
+.grid-content-bg-purple{
+
+  border-bottom: 2px solid rgb(154, 168, 212); 
+}
+
+.el-tabs__active-bar {
+  border-bottom: 2px solid rgb(154, 168, 212);
+}
+
+.el-tabs__item.is-active {
+  color: rgb(154, 168, 212);
+}
+
+
 </style>

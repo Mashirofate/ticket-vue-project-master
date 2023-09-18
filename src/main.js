@@ -11,6 +11,9 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import less from 'less'
+Vue.use(less)
+
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
@@ -64,8 +67,8 @@ Vue.use(ElementUI)
 Vue.config.productionTip = false
 
 new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
 })
