@@ -23,3 +23,10 @@ export function gethuizou(params) {
         data: params
     })
 }
+export function getapplet(params) {
+    return request({
+        url: '/fr/applet',
+        method: 'post',
+        data: params
+    })
+}

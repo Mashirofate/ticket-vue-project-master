@@ -77,8 +77,8 @@ export default {
     },
 
     initWebSocket(value) {
-      const wsuri = 'ws://172.127.1.200:8080/RealTimeEntranceServer/' + value.aId
-      //  const wsuri = 'ws://localhost:8080/RealTimeEntranceServer/' + value.aId
+     // const wsuri = 'ws://172.127.1.200:8080/RealTimeEntranceServer/' + value.aId
+       const wsuri = 'ws://localhost:8080/RealTimeEntranceServer/' + value.aId
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -106,6 +106,7 @@ export default {
       // if (this.chartData.rows.length >= 20) {
       //   this.chartData.rows.shift();
       // }
+    
       const redata = JSON.parse(e.data)
       this.enterlist = redata.enterlist
       this.outlist = redata.outlist

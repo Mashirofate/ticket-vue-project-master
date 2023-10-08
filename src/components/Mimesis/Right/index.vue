@@ -24,14 +24,14 @@
           <div class="sup-le">
             <div class="sup-image" :style="{'background': 'url('+require('../../../assets/src_imgs/background/pic-4.png')+') no-repeat center center', 'background-size': '100% 100%'} " />
             <div class="tit-chart-container">
-              <div class="matts-tit">{{ count.realname }}</div>
+              <div class="matts-tit">{{ realname }}</div>
               <div class="flip-number-suffix">实名入场(人次)</div>
             </div>
           </div>
           <div class="sup-le">
             <div class="sup-image" :style="{'background': 'url('+require('../../../assets/src_imgs/background/pic-4.png')+') no-repeat center center', 'background-size': '100% 100%'} " />
             <div class="tit-chart-container">
-              <div class="matts-tit">{{ count.Norealname }}</div>
+              <div class="matts-tit">{{ Norealname }}</div>
               <div class="flip-number-suffix">未实名入场(人次)</div>
             </div>
           </div>
@@ -86,6 +86,8 @@ export default {
       enterImg: [],
       outImg: [],
       count: {},
+      realname: null,
+      Norealname: null,
       intraFieldsum: null,
       typeOutCount: null
     }
@@ -113,8 +115,8 @@ export default {
   },
   methods: {
     initWebSocket(value) {
-       const wsuri = 'ws://172.127.1.200:8080/RealTimeEnterServer/' + value.aId
-      //const wsuri = 'ws://localhost:8080/RealTimeEnterServer/' + value.aId
+       //  const wsuri = 'ws://172.127.1.200:8080/RealTimeEnterServer/' + value.aId
+     const wsuri = 'ws://localhost:8080/RealTimeEnterServer/' + value.aId
       // console.log(wsuri);
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -138,8 +140,8 @@ export default {
       const redata = JSON.parse(e.data)
       this.enterImg = redata.enterImg
       this.outImg = redata.OutImg
-
-      this.count = redata.typeenterCount
+      this.Norealname = redata.Norealname
+      this.realname = redata.realname
       this.typeOutCount = redata.typeOutCount
       this.intraField = redata.intraField
       this.intraFieldsum = this.intraField + this.typeOutCount

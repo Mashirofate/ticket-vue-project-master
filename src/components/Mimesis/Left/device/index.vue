@@ -50,8 +50,8 @@ export default {
   },
   methods: {
     initWebSocket(value) {
-        const wsuri = 'ws://172.127.1.200:8080/UnitTypeTimeService/' + value;
-     //  const wsuri = 'ws://localhost:8080/UnitTypeTimeService/' + value
+       //  const wsuri = 'ws://172.127.1.200:8080/UnitTypeTimeService/' + value;
+      const wsuri = 'ws://localhost:8080/UnitTypeTimeService/' + value
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage

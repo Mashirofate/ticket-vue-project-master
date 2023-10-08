@@ -43,7 +43,7 @@ export default {
 <style scoped>
 .chart-container-canvas{
   width: 1900px;
-  height: 125px;
+  height: 105px;
   z-index: 10;
 }
 </style>

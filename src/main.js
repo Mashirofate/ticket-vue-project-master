@@ -14,6 +14,9 @@ import router from './router'
 import less from 'less'
 Vue.use(less)
 
+import dataV from '@jiaminghi/data-view'
+Vue.use(dataV)
+
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 

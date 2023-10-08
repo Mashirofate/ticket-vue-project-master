@@ -46,6 +46,7 @@
 
         <el-button  @click="onPosts">江门</el-button>
         <el-button  @click="onPosthuizou">惠州</el-button>
+        <el-button  @click="onapplet">小程序</el-button>
       </el-form>
 
     </el-card>
@@ -94,7 +95,7 @@
 </template>
 
 <script>
-import { getByKeys ,getposts,gethuizou} from '@/api/fr'
+import { getByKeys ,getposts,gethuizou,  getapplet} from '@/api/fr'
 export default {
   data() {
     return {
@@ -265,6 +266,22 @@ export default {
       })
     },
   
+    onapplet() {
+      this.record = []
+      getapplet(1).then(response => {
+        var list = response.data.items
+        if (list != null) {
+          this.record = records
+         
+        } else {
+        
+          this.worthys(1, 10, null, 0)
+        }
+        this.tabelLoading = false
+      })
+    },
+  
+
     getBase64(file) {
       return new Promise(function(resolve, reject) {
         const reader = new FileReader()

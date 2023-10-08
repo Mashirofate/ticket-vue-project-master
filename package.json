@@ -20,6 +20,7 @@
         "@antv/g2": "^4.0.15",
         "@antv/g2plot": "^2.4.31",
         "@babel/runtime": "^7.22.10",
+        "@jiaminghi/data-view": "^2.10.0",
         "@weilan/el-tree-table": "^0.1.4",
         "@xkeshi/vue-barcode": "^1.0.0",
         "axios": "0.18.1",

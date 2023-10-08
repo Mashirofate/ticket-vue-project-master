@@ -200,9 +200,9 @@ export default {
       )
     },
     initWebSocket(value) {
-       const wsuri = 'ws://172.127.1.200:8080/RealTimeOtherServer/' + value.aId
-      // const wsuri = 'ws://localhost:8080/RealTimeOtherServer/' + value.aId
-      console.log(wsuri)
+    // const wsuri = 'ws://172.127.1.200:8080/RealTimeOtherServer/' + value.aId
+        const wsuri = 'ws://localhost:8080/RealTimeOtherServer/' + value.aId
+    //  console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
       this.websock.onopen = this.websocketonopen
@@ -233,6 +233,7 @@ export default {
       // if (this.chartData.rows.length >= 20) {
       //   this.chartData.rows.shift();
       // }
+      //console.log(e.data);
       const redata = JSON.parse(e.data)
       this.intraField = redata.intraField
       this.work = redata.work
