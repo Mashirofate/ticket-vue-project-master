@@ -3,8 +3,8 @@ import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-const BASE_API = 'http://localhost:8080'
-    //const BASE_API = 'http://172.127.1.200:8080'
+//const BASE_API = 'https://www.zeantong.com:8080'
+    const BASE_API = 'http://127.0.0.1:8080'
 
 const service = axios.create({
     baseURL: BASE_API,

@@ -30,3 +30,10 @@ export function getapplet(params) {
         data: params
     })
 }
+export function getEntryrecord(params) {
+    return request({
+        url: '/fr/Entryrecord',
+        method: 'post',
+        data: params
+    })
+}

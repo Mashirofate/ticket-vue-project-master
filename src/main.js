@@ -20,6 +20,8 @@ Vue.use(dataV)
 import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
 
+import '../node_modules/echarts/map/js/china';
+
 import '@/icons' // icon
 import '@/permission' // permission control
 

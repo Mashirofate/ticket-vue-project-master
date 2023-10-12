@@ -1,43 +1,37 @@
 <template>
-  <div id="exhibition" class="bg-img">
+  <div class="page-item1">
+    <div class="Top-Item">
+      <!-- <TopItem :activity="activity" /> -->
+      <strong>{{ activity.aName }}</strong>
+    </div>
+    <div class="Bottom-item">
+      <div class="Left-Item">
+        <LeftItem :activity="activity" />
+      </div>
+      <div class="Centre-Item">
+        <CentreItem :activity="activity" />
+      </div>
+      <div class="Right-item">
+        <RightItem :activity="activity" />
+      </div>
+    </div>
 
-    <div class="item-top">
-      <div class="logls">
-        <el-image
-          style="width: 200px; height: 62px; ;"
-          :src="require('@/assets/src_imgs/background/ze1.png')"
-        />
-      </div>
-      <div class="item-top11"><center1 :activity="activity" /></div>
-    </div>
-    <div class="item-content">
-      <div class="item1">
-        <Left1 :activity="activity" />
-      </div>
-      <div class="item2">
-        <center2 :activity="activity" />
-      </div>
-      <div class="item3">
-        <right1 :activity="activity" />
-      </div>
-    </div>
   </div>
+
 </template>
 
 <script>
-import Center1 from '@/components/Exhibition/Center1/index'
-import Center2 from '@/components/Exhibition/Center2/index'
-import Left1 from '@/components/Exhibition/Left1/index'
-import Right1 from '@/components/Exhibition/Right1/index'
+import LeftItem from '@/components/Exhibition/Left/index'
+import RightItem from '@/components/Exhibition/Right/index'
+import CentreItem from '@/components/Exhibition/Centre/index'
 
 import { getVaByVaId } from '@/api/va'
 
 export default {
   components: {
-    Center1,
-    Center2,
-    Left1,
-    Right1
+    LeftItem,
+    RightItem,
+    CentreItem
   },
   data() {
     return {
@@ -61,47 +55,48 @@ export default {
 </script>
 
 <style>
-body {
-  margin: initial !important;
-}
 
-.bg-img {
-  background-image: url("../../assets/src_imgs/background/3.png");
-  width: 120rem;
-  height: 67.5rem;
+
+
+.page-item1{
+   
+    flex-direction: column;
+    /* background-image: url("../../assets/背景.png"); */
+    background-image: url("../../assets/pejing.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width:fit-content;
+    height: 1080px;
+    width:-webkit-fit-content;
+    width:-moz-fit-content;
+}
+.page-item1 > .Top-Item{
   display: flex;
-  flex-direction:column;
+  height: 90px;
+  width: 1920px;
+  color: aliceblue;
+  font-size: 27px;
+  display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+
+    
+}
+.page-item1 > .Bottom-item {
+   display: flex;
+   flex-direction: row;
+  
+}
+.page-item1 > .Bottom-item > .Left-Item{
+ 
+   width: 470px;
+}
+.page-item1 > .Bottom-item > .Centre-Item{
+   width: 980px;
+}
+.page-item1 > .Bottom-item > .Right-item{
+   width: 470px;
+ 
 }
 
-.item-top{
-  height: 4.5rem;
-}
-.item-top11{
-  padding-right: 600px;
-
-}
-.item-content{
-display: flex;
-}
-
-.item1 {
-  margin-left: 1rem;
-}
-
-.item2 {
- margin-left: 1rem;
- margin-right: 1rem;
-}
-
-.item3{
-  margin-right: 1rem;
-}
-.logls{
-  float: left;
-  width: 600px;
-  color: #74b5e1;;
-  padding-left:16px;
-  padding-bottom: 4px;
-  padding-top: 4px;
-}
 </style>
