@@ -75,8 +75,8 @@ export default {
     },
 
     initWebSocket(value) {
-    // const wsuri = 'ws://127.0.0.1:8080/RealTimeEntranceServer/' + value.aId
-        const wsuri = 'wss:///www.zeantong.com:8080/RealTimeEntranceServer/' + value.aId
+     const wsuri = 'ws://127.0.0.1:8080/RealTimeEntranceServer/' + value.aId
+     //   const wsuri = 'wss:///www.zeantong.com:8080/RealTimeEntranceServer/' + value.aId
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage

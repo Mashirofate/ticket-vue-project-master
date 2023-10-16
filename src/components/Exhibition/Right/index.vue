@@ -39,14 +39,14 @@
         </div>
       </div>
       <div class="flip-number-t"> 
-        <div class="flip-number-tit">各入口情况</div>
+        <div class="flip-number-tit">入口情况</div>
         <div class="flip-number-titts">Information by entry</div>
       </div>
       <div class="right-item-mattss">
           <div id="right-item-mattaxis" class="right-item-mattaxis"></div>
       </div>
       <div class="flip-number-t"> 
-        <div class="flip-number-tit">各出口情况</div>
+        <div class="flip-number-tit">出口情况</div>
         <div class="flip-number-titts">Information by entry</div>
       </div>
       <div class="right-item-mattss">
@@ -114,8 +114,8 @@ export default {
   },
   methods: {
     initWebSocket(value) {
-       //   const wsuri = 'ws://127.0.0.1:8080/RealTimeEnterServer/' + value.aId
-    const wsuri = 'wss://www.zeantong.com:8080/RealTimeEnterServer/' + value.aId
+          const wsuri = 'ws://10.5.2.100:8080/RealTimeEnterServer/' + value.aId
+   // const wsuri = 'wss://www.zeantong.com:8080/RealTimeEnterServer/' + value.aId
       // console.log(wsuri);
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage

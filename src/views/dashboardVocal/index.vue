@@ -40,7 +40,7 @@
               :label="item.aName"
               ::name="index"
             >
-              <p>活动标题aaaaaaaaaaaaaaaaaaaa：{{ item.aName }}</p>
+              <p>活动标题：{{ item.aName }}</p>
 
               <p>活动描述：{{ item.aNote }}</p>
               <p>票务数量：{{ item.aTicketnumber + '个' }}</p>

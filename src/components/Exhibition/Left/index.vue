@@ -24,7 +24,7 @@
       </div>
 
       <div class="flip-number-t">
-          <div class="flip-number-tit">场内入场人数预警</div>
+          <div class="flip-number-tit">场内实时人数预警</div>
           <div class="flip-number-titts">Attendance warning</div>
        
       </div>
@@ -36,7 +36,7 @@
         </div>
 
       <div class="flip-number-t">
-          <div class="flip-number-tit">人员性别分布情况</div>
+          <div class="flip-number-tit">入场人员性别比例</div>
           <div class="flip-number-titts">Sex quantity distribution</div>
  
         
@@ -93,8 +93,8 @@ export default {
   methods: {
     
     initWebSocket(value) {
-   // const wsuri = 'ws://127.0.0.1:8080/RealTimeOtherServer/' + value.aId
-         const wsuri = 'wss://www.zeantong.com:8080/RealTimeOtherServer/' + value.aId
+    const wsuri = 'ws://10.5.2.100:8080/RealTimeOtherServer/' + value.aId
+      //   const wsuri = 'wss://www.zeantong.com:8080/RealTimeOtherServer/' + value.aId
     //  console.log(wsuri)
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -127,7 +127,12 @@ export default {
       this.intraField = redata.intraField
       this.work = redata.work
       this.gender =redata.gender
-      this.alist=(this.intraField / this.anumber).toFixed(4)  * 100;
+     
+      var number=this.intraField / this.anumber;
+      number = String(number*100).replace(/^(.*\..{2}).*$/,"$1");
+    number = Number(number); // number = 12.3321
+      this.alist= number;
+
     },
     websocketclose(e) {
      
