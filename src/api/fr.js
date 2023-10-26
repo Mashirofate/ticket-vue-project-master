@@ -1,10 +1,10 @@
 import request from '@/utils/request'
 
-export function getByKeys(data) {
+export function getByKeys(params) {
     return request({
         url: '/fr/search',
         method: 'post',
-        data: data
+        data: params
     })
 }
 

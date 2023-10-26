@@ -34,6 +34,8 @@ Vue.use(Viser)
 import Print from 'vue-print-nb'
 Vue.use(Print)
 
+
+
 import VueBarcode from '@xkeshi/vue-barcode'
 Vue.component('barcode', VueBarcode)
 
@@ -70,6 +72,9 @@ Vue.use(VueParticles)
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
+
+
+
 
 new Vue({
     el: '#app',

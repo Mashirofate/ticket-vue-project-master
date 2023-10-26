@@ -46,7 +46,7 @@
           <div id="right-item-mattaxis" class="right-item-mattaxis"></div>
       </div>
       <div class="flip-number-t"> 
-        <div class="flip-number-tit">出口情况</div>
+        <div class="flip-number-tit">入场年龄情况</div>
         <div class="flip-number-titts">Information by entry</div>
       </div>
       <div class="right-item-mattss">
@@ -82,6 +82,8 @@ export default {
       enterListvalue:[],
       outListname:[],
       outListvalue:[],
+      ageListname:[],
+      ageListvalue:[],
 
     }
   },
@@ -114,8 +116,8 @@ export default {
   },
   methods: {
     initWebSocket(value) {
-          const wsuri = 'ws://10.5.2.100:8080/RealTimeEnterServer/' + value.aId
-   // const wsuri = 'wss://www.zeantong.com:8080/RealTimeEnterServer/' + value.aId
+       const wsuri = 'ws://172.127.1.200:8080/websocket/RealTimeEnterServer/' + value.aId
+    //const wsuri = 'wss://www.zeantong.com:8080/RealTimeEnterServer/' + value.aId
       // console.log(wsuri);
       this.websock = new WebSocket(wsuri)
       this.websock.onmessage = this.websocketonmessage
@@ -149,6 +151,9 @@ export default {
       this.enterListvalue= redata.enterListvalue
       this.outListname= redata.outListname
       this.outListvalue= redata.outListvalue
+
+      this.ageListname= redata.ageListname
+      this.ageListvalue= redata.ageListvalue
     },
     websocketclose(e) {
     },
@@ -247,13 +252,13 @@ let data = [220, 182, 191, 234, 290, ];
           })
 
         },
-        remattaxischu() {
+remattaxischu() {
 
 const myChart = echarts.init(document.getElementById('right-item-mattaxis-chu'))
 
 myChart.setOption({
               xAxis: {
-      data: this.outListname,
+      data: this.ageListname,
      
       axisTick: {
         show: false
@@ -334,7 +339,7 @@ myChart.setOption({
     }])
     }
         },
-        data: this.outListvalue
+        data: this.ageListvalue
       }
     ]
 })
@@ -467,6 +472,4 @@ font-family: Microsoft Yahei;
    align-self: flex-start;
    padding-top: 10px;
 }
-
-
 </style>

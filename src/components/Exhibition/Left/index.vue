@@ -93,7 +93,7 @@ export default {
   methods: {
     
     initWebSocket(value) {
-    const wsuri = 'ws://10.5.2.100:8080/RealTimeOtherServer/' + value.aId
+    const wsuri = 'ws://172.127.1.200:8080/RealTimeOtherServer/' + value.aId
       //   const wsuri = 'wss://www.zeantong.com:8080/RealTimeOtherServer/' + value.aId
     //  console.log(wsuri)
       this.websock = new WebSocket(wsuri)

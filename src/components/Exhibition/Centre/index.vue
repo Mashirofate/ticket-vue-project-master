@@ -2,17 +2,14 @@
   <div class="centre-page">
     
     <div class="flip-number-tit-centre-sup">   
-  
-   
+      <dv-border-box-1>
+        <div  class="centreChart-bar1"  >
+          <div id="mapChart" ref="mapChart" class="chinaecharts" ></div>
+          <!-- <echars_china :a-id="this.aId" /> -->
+          </div>
 
-    <dv-border-box-1>
-      <div  class="centreChart-bar1"  >
-        <div id="mapChart" ref="mapChart" class="chinaecharts" ></div>
-        <!-- <echars_china :a-id="this.aId" /> -->
-        </div>
-
-  </dv-border-box-1>
-</div>
+      </dv-border-box-1>
+    </div>
 
     <div class="centreBelowChart-bar">
       <dv-decoration-10 style="width:100%;height:5px;" />
@@ -75,7 +72,7 @@ export default {
     },
 
     initWebSocket(value) {
-     const wsuri = 'ws://127.0.0.1:8080/RealTimeEntranceServer/' + value.aId
+     const wsuri = 'ws://172.127.1.200:8080/RealTimeEntranceServer/' + value.aId
      //   const wsuri = 'wss:///www.zeantong.com:8080/RealTimeEntranceServer/' + value.aId
       console.log(wsuri)
       this.websock = new WebSocket(wsuri)
@@ -100,6 +97,8 @@ export default {
       this.GrandList =redata.GrandList
       this.GrandsList =redata.GrandsList
       this.listmap =redata.listmap
+ 
+
 
     },
     websocketclose(e) {
@@ -242,31 +241,32 @@ export default {
                     itemGap: 2, // 每两个图元之间的间隔距离，单位为px
                     pieces: [
                         // 自定义每一段的范围，以及每一段的文字
-                        { gte: 10000, label: "10000人以上", color: "#1890FF" }, // 不指定 max，表示 max 为无限大（Infinity）。
+                        { gte: 5000, label: "5000人以上", color: "#FF0000" }, // 不指定 max，表示 max 为无限大（Infinity）。
+                        {
+                            gte: 2000,
+                            lte: 4999,
+                            label: "2000-4999人",
+                            color: "#FFA127",
+                        },
                         {
                             gte: 1000,
-                            lte: 9999,
-                            label: "1000-9999人",
-                            color: "#83C2FF",
+                            lte: 1999,
+                            label: "1000-1999人",
+                            color: "#FFAC7F",
                         },
                         {
                             gte: 500,
                             lte: 999,
                             label: "500-999人",
-                            color: "#CDE5FF",
-                        },
-                        {
-                            gte: 100,
-                            lte: 499,
-                            label: "100-499人",
-                            color: "#E6F1FF",
+                            color: "#1890FF",
                         },
                         {
                             gte: 1,
-                            lte: 99,
-                            label: "1-99人",
-                            color: "#EBF3FF",
+                            lte: 499,
+                            label: "1-499人",
+                            color: "#83C2FF",
                         },
+                       
                         { lte: 0, label: "无", color: "#FAFAFA" }, // 不指定 min，表示 min 为无限大（-Infinity）。
                     ],
                     textStyle: {
@@ -285,7 +285,7 @@ export default {
                         name: "地图",
                         type: "map", //地图种类
                         map: "china", //地图类型。
-                        data: this.listmap,
+                        data:this.listmap,
                         itemStyle: {
                             normal: {
                                 label: {
@@ -346,11 +346,13 @@ export default {
 .centreChart-bar1{
   width: 980px;
   height: 520px;
+ 
 
 }
 .centreChart-bar{
   width: 980px;
   height: 400px;
+  padding-top: 10px;
 
 }
 .centreBelowChart-bar{
@@ -396,6 +398,7 @@ export default {
   font-weight: normal;
   align-items: center;
   padding-top: 10px;
+  padding-bottom: 5px;
 }
 .flip-number-tad{
   font-size: 22px;
